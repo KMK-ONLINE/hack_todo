@@ -1,4 +1,4 @@
-<?php
+<?hh
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,14 @@
 
 use App\Task;
 use Illuminate\Http\Request;
+
+/**
+ * Show XHP Page
+ */
+Route::get('/home', function () {
+    return <home name="Tommy Sullivan" />;
+});
+
 
 /**
  * Show Task Dashboard

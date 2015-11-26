@@ -32,6 +32,13 @@ class TasksController extends Controller {
     return redirect('/');
   }
 
+  public function update(Request $request, $id) {
+    $task = Task::findOrFail($id);
+    $task->name = $request->name;
+    $task->save();
+    return redirect('/'); 
+  }
+
   public function destroy($id) {
     Task::findOrFail($id)->delete();
     return redirect('/');

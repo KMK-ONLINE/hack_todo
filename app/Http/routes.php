@@ -21,4 +21,5 @@ Route::get('/home', function () {
 
 Route::get('/',             ['as' => 'root',          'uses' => 'TasksController@index']);
 Route::post('/task',        ['as' => 'tasks.store',   'uses' => 'TasksController@store']);
+Route::put('/task/{id}',    ['as' => 'tasks.update',  'uses' => 'TasksController@update']);
 Route::delete('/task/{id}', ['as' => 'tasks.destroy', 'uses' => 'TasksController@destroy']);

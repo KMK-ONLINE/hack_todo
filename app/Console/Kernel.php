@@ -13,6 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        \App\Console\Commands\DbCreate::class,
+        \App\Console\Commands\DbDrop::class,
+        \App\Console\Commands\DbFix::class,
+        \App\Console\Commands\DbSchemaDump::class,
+        \App\Console\Commands\DbSchemaRestore::class,
         \App\Console\Commands\Inspire::class,
     ];
 

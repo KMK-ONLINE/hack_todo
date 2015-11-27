@@ -1,18 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use TestCase;
-use Session;
-use URL;
 use App\Models\Task;
 
-class TaskTest extends TestCase {
-
-    public function setUp() {
-      parent::setUp();
-      Session::start();
-    }
+class TasksControllerTest extends ControllerTestCase {
 
     public function test_index() {
       $path = URL::route('root');

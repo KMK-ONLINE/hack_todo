@@ -5,7 +5,7 @@ use App\Models\Task;
 class TasksControllerTest extends ControllerTestCase {
 
     public function test_index() {
-      $path = URL::route('root');
+      $path = URL::route('tasks.index');
       $response = $this->get($path);
       $this->assertResponseStatus(200);
     }

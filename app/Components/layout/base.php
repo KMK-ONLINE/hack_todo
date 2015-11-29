@@ -7,82 +7,88 @@ class :layout:base extends :x:element {
   public function render() {
     return
       <x:doctype>
-        <html lang="en">
-        <head>
-          <meta charset="utf-8" />
-          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <html lang="en" data-framework="react">
+          <head>
+            <meta charset="utf-8" />
+            <title>{$this->getAttribute('title')}</title>
+            <link href={elixir('css/app.css')} rel="stylesheet" type="text" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+            <script>{$this->script()}</script>
+          </head>
 
-          <title>{$this->getAttribute('title')}</title>
+          <body class="learn-bar">
 
-          <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet" type="text/css" />
-          <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-          <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+            <aside class="learn">
+              <header>
+                <h3>Laravel + XHP</h3>
+                <h5>
+                  <span class="source-links">Example</span>
+                </h5>
+                <span class="source-links">
+                  <a href="https://github.com/KMK-ONLINE/hack_todo">Source</a>
+                </span>
+              </header>
 
-          <link href={elixir('css/app.css')} rel="stylesheet" type="text" />
+              <hr />
 
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+              <blockquote class="quote speech-bubble">
+                <p>XHP is a PHP5 extension and HHVM feature that augments the syntax of the language such that XML document fragments become valid PHP expressions.</p>
+                <footer>
+                    <a href="https://github.com/facebook/xhp-lib">xhp-lib</a>
+                </footer>
+              </blockquote>
 
-          <style>{$this->style()}</style>
+              <hr />
 
-          <script>{$this->script()}</script>
-        </head>
+              <h4>Official Resources</h4>
 
-        <body>
-          <div class="container">
-            <nav class="navbar navbar-default">
-              <div class="container-fluid">
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
+              <ul>
+                <li><a href="http://laravel.com/docs/5.1/quickstart">Laravel's original quickstart guide</a></li>
+                <li><a href="https://github.com/facebook/xhp-lib">Facebook's explaination of XHP</a></li>
+              </ul>
 
-                  <a class="navbar-brand" href="#">Task List</a>
-                </div>
+              <footer>
 
-                <div id="navbar" class="navbar-collapse collapse">
-                  <ul class="nav navbar-nav">
-                  </ul>
-                </div>
-              </div>
-            </nav>
-          </div>
+                <hr />
 
-          {$this->getChildren()}
-        </body>
+                <em>
+                  If you have suggestions as to how we can improve this codebase, please <a href="https://github.com/KMK-ONLINE/hack_todo/issues">let us know</a>.
+                </em>
+              </footer>
+            </aside>
+
+            <section class="todoapp">
+              {$this->getChildren()}
+            </section>
+
+            <footer class="info">
+              <p>Double-click to edit a todo</p>
+              <p>Created by <a href="http://github.com/kmk-online/">kmk-online</a></p>
+              <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+            </footer>
+
+          </body>
         </html>
       </x:doctype>;
   }
 
-  private function style() {
-    return <<<STYLE
-body {
-  font-family: 'Raleway';
-  margin-top: 25px;
-}
-
-button .fa {
-  margin-right: 6px;
-}
-
-.table-text div {
-  padding-top: 6px;
-}
-STYLE;
-  }
-
-  private function script() {
+  public function script() {
     return <<<SCRIPT
-$(function () {
-  $('#task-name').focus();
+$(document).ready(function() {
+  var listItems = $('ul.todo-list > li');
+
+  listItems.dblclick(function() {
+    $(this).addClass('editing');
+  });
+
+  $('input.toggle-all').click(function() {
+    var listItemCheckboxes = $('input[type=checkbox]', listItems);
+    listItemCheckboxes.prop('checked', $(this).is(':checked'));
+  });
+
 });
 SCRIPT;
   }
-
 
 }
 

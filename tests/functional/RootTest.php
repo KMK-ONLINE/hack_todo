@@ -16,18 +16,30 @@ class RootTest extends FunctionalTestCase {
   }
 
   public function test_tasks_can_be_created() {
-    $this->visit('/')->dontSee('Task 1');
-
     $this->visit('/')
-        ->type('Task 1', 'name')
-        ->press('Add Task')
-        ->see('Task 1');
+         ->dontSee('Task 1');
+
+    $form = $this->crawler->filter('form[method=post]')->form();
+    $form->setValues([ 'name' => 'Task 1' ]);
+    $this->makeRequestUsingForm($form);
+
+    // $this->visit('/')
+    //     ->type('Task 1', 'name')
+    //     ->press('Add Task');
+
+    $this->see('Task 1');
   }
 
   public function test_long_tasks_cant_be_created() {
-    $this->visit('/')
-        ->type(str_random(300), 'name')
-        ->press('Add Task')
-        ->see('Whoops!');
+    $this->visit('/');
+    $form = $this->crawler->filter('form[method=post]')->form();
+    $form->setValues([ 'name' => str_random(300) ]);
+    $this->makeRequestUsingForm($form);
+
+    // $this->visit('/')
+    //     ->type(str_random(300), 'name')
+    //     ->press('Add Task');
+
+    $this->see('Whoops!');
   }
 }

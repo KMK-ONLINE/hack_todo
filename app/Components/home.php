@@ -12,48 +12,36 @@ class :home extends :x:element {
     return
       <layout:base title="Laravel + XHP • TodoMVC">
 
-        <div class="container">
-          <div class="col-sm-offset-2 col-sm-8">
+        <common:errors errors={$this->:errors} />
 
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                New Task
-              </div>
+        <header class="header">
+          <h1>todos</h1>
 
-              <div class="panel-body">
-                <!-- Display Validation Errors -->
-                <common:errors errors={$this->:errors} />
+          <form action="/task" method="post">
+            <input type="hidden" name="_token" value={csrf_token()} />
+            <input type="text"   name="name"   value={old('task')} class="new-todo" placeholder="What needs to be done?" />
+          </form>
+        </header>
 
-                <!-- New Task Form -->
-                <form action="/task" method="post" class="form-horizontal">
-                  <input type="hidden" name="_token" value={csrf_token()} />
+        {$this->renderTasks()}
 
-                  <!-- Task Name -->
-                  <div class="form-group">
-                    <label for="task-name" class="col-sm-3 control-label">Task</label>
-
-                    <div class="col-sm-6">
-                      <input type="text" name="name" id="task-name" class="form-control" value={old('task')} />
-                    </div>
-                  </div>
-
-                  <!-- Add Task Button -->
-                  <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-6">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fa fa-plus"></i>Add Task
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-
-
-            {$this->renderTasks()}
-
-          </div>
-        </div>
+        <footer class="footer">
+          <span class="todo-count">
+            <strong>{count($this->:tasks)}</strong> items left
+          </span>
+          <ul class="filters">
+            <li>
+              <a class="selected" href="#/">All</a>
+            </li>
+            <li>
+              <a class="" href="#/active">Active</a>
+            </li>
+            <li>
+              <a class="" href="#/completed">Completed</a>
+            </li>
+          </ul>
+          <button class="clear-completed">Clear completed</button>
+        </footer>
 
       </layout:base>;
 
@@ -64,43 +52,34 @@ class :home extends :x:element {
       return <x:frag />;
     }
 
-    return  <div class="panel panel-default">
-              <div class="panel-heading">
-                Current Tasks
-              </div>
+    return
+      <section class="main">
+        <input class="toggle-all" type="checkbox"></input>
+        <ul class="todo-list">
+          {$this->:tasks->map(function($task) { return $this->renderTask($task); })->all()}
+        </ul>
+      </section>;
 
-              <div class="panel-body">
-                <table class="table table-striped task-table">
-                  <thead>
-                    <tr>
-                      <th>Task</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {$this->:tasks->map(function($task) { return $this->renderTask($task); })->all()}
-                  </tbody>
-                </table>
-              </div>
-            </div>;
   }
 
   private function renderTask($task) {
-    return  <tr>
-              <td class="table-text"><div>{$task->name}</div></td>
+    $completed = false;
 
-              <!-- Task Delete Button -->
-              <td>
-                <form action={"/task/{$task->id}"} method="post">
-                  <input type="hidden" name="_token" value={csrf_token()} />
-                  <input type="hidden" name="_method" value="delete" />
+    return
+      <li class={ $completed ? 'completed' : '' }>
+        <div class="view">
+          <input class="toggle" type="checkbox" />
+          <label>{$task->name}</label>
 
-                  <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-trash"></i>Delete
-                  </button>
-                </form>
-              </td>
-            </tr>;
+          <form action={"/task/{$task->id}"} method="post">
+            <input type="hidden" name="_token" value={csrf_token()} />
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit" class="destroy"></button>
+          </form>
+
+        </div>
+        <input class="edit" value={$task->name} />
+      </li>;
   }
 
 }

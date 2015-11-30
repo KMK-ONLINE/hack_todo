@@ -1,5 +1,7 @@
 <?php
 
+putenv('LARAVEL_ENV=testing');
+
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
@@ -17,6 +19,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
    * @return \Illuminate\Foundation\Application
    */
   public function createApplication() {
+
     $app = require __DIR__.'/../bootstrap/app.php';
 
     $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();

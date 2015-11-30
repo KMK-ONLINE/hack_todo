@@ -39,7 +39,26 @@ $app->singleton(
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
-);
+  );
+
+
+/*
+ *  Use specfied .env files by based on LARAVEL_ENV or
+ *  artisan --env argument
+ */
+if (isset($argv) && is_array($argv)) {
+  foreach($argv as $arg) {
+    if (starts_with($arg, '--env=')) {
+      list($argname, $argvalue) = explode('=', $arg, 2);
+      putenv("LARAVEL_ENV=$argvalue");
+    }
+  }
+}
+$laravel_env = strtolower(getenv('LARAVEL_ENV'));
+if (empty($laravel_env)) $laravel_env = 'development';
+$app->loadEnvironmentFrom('.env.'.$laravel_env);
+
+
 
 /*
 |--------------------------------------------------------------------------

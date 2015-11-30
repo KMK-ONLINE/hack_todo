@@ -27,21 +27,9 @@ class TaskController extends Controller {
     return <task:index collection={$tasks->get()} />;
   }
 
-  public function store(Request $request) {
-    $validator = Validator::make($request->all(), [
-      'name' => 'required|max:255',
-    ]);
-
-    if ($validator->fails()) {
-      $tasks = Task::orderBy('created_at', 'asc')->get();
-      $errors = new Collection($validator->errors()->toArray());
-      return <task:index collection={$tasks} errors={$errors} />;
-    }
-
-    $task = new Task();
-    $task->name = $request->name;
-    $task->save();
-
+  public function store(TaskRequest $request) {
+    $params = $this->strongParams($request, ['name']);
+    $task = Task::create($params);
     return redirect('/');
   }
 

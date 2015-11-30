@@ -1,8 +1,6 @@
 # KMK • TodoMVC
 
 Feature Complete:
-  - complete a todo
-  - editing / updating
   - clear completed
 
   - pretty errors
@@ -10,9 +8,7 @@ Feature Complete:
 
 TODO:
   - service pattern
-  - request validation
   - request test -> acceptance test w/selenium / headless
-  - xhp components mirror the reactjs example / structuring
   - update larator
 
 Nice To Have:

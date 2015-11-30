@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-class TaskRequest extends Request
-{
+class TaskRequest extends Request {
+
   public function messages() {
     return [
     ];
@@ -14,8 +14,7 @@ class TaskRequest extends Request
    *
    * @return bool
    */
-  public function authorize()
-  {
+  public function authorize() {
     return true;
   }
 
@@ -24,32 +23,26 @@ class TaskRequest extends Request
    *
    * @return array
    */
-  public function rules()
-  {
-    switch($this->method())
-    {
-      case 'GET':
-      {
+  public function rules() {
+    switch($this->method()) {
+      case 'GET': {
         return [
-          'filter' => ['string']
+          'filter'          => ['string']
         ];
       }
-      case 'DELETE':
-      {
+      case 'DELETE': {
         return [];
       }
-      case 'POST':
-      {
+      case 'POST': {
         return [
-          'phone'                   => ['regex:/^\+?[0-9]+$/']
+          'name'            => ['string', 'required']
         ];
       }
       case 'PUT':
-      case 'PATCH':
-      {
+      case 'PATCH': {
         return [
-          'name'                   => ['string'],
-          'completed'                   => ['boolean']
+          'name'            => ['string'],
+          'completed'       => ['boolean']
         ];
       }
       default:break;

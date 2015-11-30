@@ -4,25 +4,13 @@ use App\Models\Task;
 
 class TaskTest extends UnitTestCase {
 
-  public function test_transactions() {
-    $this->assertEquals(0, Task::count());
+  public function test_active() {
+    $active =   factory(Task::class)->create(['completed' => false]);
+    $inactive = factory(Task::class)->create(['completed' => true]);
 
-    $task = new Task();
-    $task->name = "Wash Dishes";
-    $task->save();
-
-    $this->assertEquals(1, Task::count());
-  }
-
-  public function test_isValid() {
-    $task = new Task();
-    $this->assertFalse($task->isValid());
-
-    $task->name = "Wash Dishes";
-    $this->assertTrue($task->isValid());
-
-    $task->name = str_repeat("Wash Dishes", 100);
-    $this->assertFalse($task->isValid());
+    $tasks = Task::active()->lists('id');
+    $this->assertContains($active->id, $tasks);
+    $this->assertNotContains($inactive->id, $tasks);
   }
 
 }

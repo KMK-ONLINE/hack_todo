@@ -63,10 +63,8 @@ class :home extends :x:element {
   }
 
   private function renderTask($task) {
-    $completed = false;
-
     return
-      <li class={ $completed ? 'completed' : '' }>
+      <li class={ $task->completed ? 'completed' : '' }>
         <div class="view">
           <input class="toggle" type="checkbox" />
           <label>{$task->name}</label>

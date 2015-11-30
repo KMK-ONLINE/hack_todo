@@ -24,7 +24,7 @@ class :task:index extends :x:element {
 
         {$this->renderTasks()}
 
-        <task:footer collection={$this->:collection} />
+        <task:footer />
 
       </layout:base>;
   }

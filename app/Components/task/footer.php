@@ -1,17 +1,16 @@
 <?hh
 
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Task;
 
 class :task:footer extends :x:element {
 
-  attribute Collection collection @required;
-
   protected function render() {
+    $activeItemsCount = Task::active()->count();
 
     return
         <footer class="footer">
           <span class="todo-count">
-            <strong>{count($this->:collection)}</strong> items left
+            <strong>{$activeItemsCount}</strong> items left
           </span>
           <ul class="filters">
             <li>

@@ -11,7 +11,5 @@
 |
 */
 
-Route::get('/',             ['as' => 'tasks.index',   'uses' => 'TasksController@index']);
-Route::post('/task',        ['as' => 'tasks.store',   'uses' => 'TasksController@store']);
-Route::put('/task/{id}',    ['as' => 'tasks.update',  'uses' => 'TasksController@update']);
-Route::delete('/task/{id}', ['as' => 'tasks.destroy', 'uses' => 'TasksController@destroy']);
+Route::resource('tasks', 'TasksController');
+Route::get('/',          'TasksController@index');

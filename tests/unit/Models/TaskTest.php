@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Task;
+namespace App\Models;
 
 class TaskTest extends UnitTestCase {
 

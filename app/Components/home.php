@@ -17,7 +17,7 @@ class :home extends :x:element {
         <header class="header">
           <h1>todos</h1>
 
-          <form action="/task" method="post">
+          <form action="/tasks" method="post">
             <input type="hidden" name="_token" value={csrf_token()} />
             <input type="text"   name="name"   value={old('task')} class="new-todo" placeholder="What needs to be done?" />
           </form>
@@ -69,7 +69,7 @@ class :home extends :x:element {
           <input class="toggle" type="checkbox" />
           <label>{$task->name}</label>
 
-          <form action={"/task/{$task->id}"} method="post">
+          <form action={"/tasks/{$task->id}"} method="post">
             <input type="hidden" name="_token" value={csrf_token()} />
             <input type="hidden" name="_method" value="delete" />
             <button type="submit" class="destroy"></button>

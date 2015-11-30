@@ -30,6 +30,7 @@
             "tests/TestCase.php",
             "tests/functional/FunctionalTestCase.php",
             "tests/unit/UnitTestCase.php",
+            "tests/unit/Components/ComponentTestCase.php",
             "tests/unit/Http/Controllers/ControllerTestCase.php"
         ]
     },

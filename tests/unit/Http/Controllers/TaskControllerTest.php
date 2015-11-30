@@ -1,5 +1,7 @@
 <?hh
 
+namespace App\Http\Controllers;
+
 use App\Models\Task;
 
 class TaskControllerTest extends ControllerTestCase {

@@ -8,7 +8,6 @@ class :task:index extends :x:element {
   attribute Collection errors;
 
   protected function render() {
-
     return
       <layout:base title="Laravel + XHP • TodoMVC">
 
@@ -25,11 +24,9 @@ class :task:index extends :x:element {
 
         {$this->renderTasks()}
 
-
         <task:footer collection={$this->:collection} />
 
       </layout:base>;
-
   }
 
   private function renderTasks() {
@@ -41,28 +38,12 @@ class :task:index extends :x:element {
       <section class="main">
         <input class="toggle-all" type="checkbox"></input>
         <ul class="todo-list">
-          {$this->:collection->map(function($task) { return $this->renderTask($task); })->all()}
+          {$this->:collection->map(function($task) {
+            return <task:item model={$task} />;
+          })->all()}
         </ul>
       </section>;
 
-  }
-
-  private function renderTask($task) {
-    return
-      <li class={ $task->completed ? 'completed' : '' }>
-        <div class="view">
-          <input class="toggle" type="checkbox" />
-          <label>{$task->name}</label>
-
-          <form action={"/task/{$task->id}"} method="post">
-            <input type="hidden" name="_token" value={csrf_token()} />
-            <input type="hidden" name="_method" value="delete" />
-            <button type="submit" class="destroy"></button>
-          </form>
-
-        </div>
-        <input class="edit" value={$task->name} />
-      </li>;
   }
 
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use UnitTestCase;
+
 class TaskTest extends UnitTestCase {
 
   public function test_active() {

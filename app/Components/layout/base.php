@@ -12,8 +12,6 @@ class :layout:base extends :x:element {
             <meta charset="utf-8" />
             <title>{$this->getAttribute('title')}</title>
             <link href={elixir('css/app.css')} rel="stylesheet" type="text" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-            <script>{$this->script()}</script>
           </head>
 
           <body class="learn-bar">
@@ -67,6 +65,9 @@ class :layout:base extends :x:element {
               <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
             </footer>
 
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+            <script src={elixir('js/app.js')}></script>
+
           </body>
         </html>
       </x:doctype>;
@@ -74,19 +75,6 @@ class :layout:base extends :x:element {
 
   public function script() {
     return <<<SCRIPT
-$(document).ready(function() {
-  var listItems = $('ul.todo-list > li');
-
-  listItems.dblclick(function() {
-    $(this).addClass('editing');
-  });
-
-  $('input.toggle-all').click(function() {
-    var listItemCheckboxes = $('input[type=checkbox]', listItems);
-    listItemCheckboxes.prop('checked', $(this).is(':checked'));
-  });
-
-});
 SCRIPT;
   }
 

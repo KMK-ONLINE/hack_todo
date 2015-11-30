@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Collection;
 
-class TasksController extends Controller {
+class TaskController extends Controller {
 
   public function index(TaskRequest $request) {
     $tasks = Task::orderBy('created_at', 'asc');
@@ -24,7 +24,7 @@ class TasksController extends Controller {
       $tasks = $tasks->completed();
     }
 
-    return <home tasks={$tasks->get()} />;
+    return <task:index collection={$tasks->get()} />;
   }
 
   public function store(Request $request) {
@@ -35,7 +35,7 @@ class TasksController extends Controller {
     if ($validator->fails()) {
       $tasks = Task::orderBy('created_at', 'asc')->get();
       $errors = new Collection($validator->errors()->toArray());
-      return <home tasks={$tasks} errors={$errors} />;
+      return <task:index collection={$tasks} errors={$errors} />;
     }
 
     $task = new Task();

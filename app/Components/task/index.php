@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Eloquent\Collection;
 
-class :home extends :x:element {
+class :task:index extends :x:element {
 
-  attribute Collection tasks @required;
+  attribute Collection collection @required;
   attribute Collection errors;
 
   protected function render() {
@@ -17,7 +17,7 @@ class :home extends :x:element {
         <header class="header">
           <h1>todos</h1>
 
-          <form action="/tasks" method="post">
+          <form action="/task" method="post">
             <input type="hidden" name="_token" value={csrf_token()} />
             <input type="text"   name="name"   value={old('task')} class="new-todo" placeholder="What needs to be done?" />
           </form>
@@ -25,30 +25,15 @@ class :home extends :x:element {
 
         {$this->renderTasks()}
 
-        <footer class="footer">
-          <span class="todo-count">
-            <strong>{count($this->:tasks)}</strong> items left
-          </span>
-          <ul class="filters">
-            <li>
-              <a class="selected" href="#/">All</a>
-            </li>
-            <li>
-              <a class="" href="#/active">Active</a>
-            </li>
-            <li>
-              <a class="" href="#/completed">Completed</a>
-            </li>
-          </ul>
-          <button class="clear-completed">Clear completed</button>
-        </footer>
+
+        <task:footer collection={$this->:collection} />
 
       </layout:base>;
 
   }
 
   private function renderTasks() {
-    if(count($this->:tasks) == 0) {
+    if(count($this->:collection) == 0) {
       return <x:frag />;
     }
 
@@ -56,7 +41,7 @@ class :home extends :x:element {
       <section class="main">
         <input class="toggle-all" type="checkbox"></input>
         <ul class="todo-list">
-          {$this->:tasks->map(function($task) { return $this->renderTask($task); })->all()}
+          {$this->:collection->map(function($task) { return $this->renderTask($task); })->all()}
         </ul>
       </section>;
 
@@ -69,7 +54,7 @@ class :home extends :x:element {
           <input class="toggle" type="checkbox" />
           <label>{$task->name}</label>
 
-          <form action={"/tasks/{$task->id}"} method="post">
+          <form action={"/task/{$task->id}"} method="post">
             <input type="hidden" name="_token" value={csrf_token()} />
             <input type="hidden" name="_method" value="delete" />
             <button type="submit" class="destroy"></button>

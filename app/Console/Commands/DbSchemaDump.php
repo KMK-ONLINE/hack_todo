@@ -19,7 +19,7 @@ class DbSchemaDump extends Command {
 
     $dbConfig = Config::get('database.connections.pgsql');
 
-    $format = $binary ? '-Fc' : '--schema-only';
+    $format = ($binary == 'false') ? '--schema-only' : '-Fc';
     $dumpSchemaCommand = "pg_dump {$format} {$dbConfig['database']} -U {$dbConfig['username']} -h {$dbConfig['host']} > {$dumpFile}";
 
     if(file_exists($dumpFile)) {

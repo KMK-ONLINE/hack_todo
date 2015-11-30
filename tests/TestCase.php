@@ -33,7 +33,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
     $output = new ConsoleOutput();
 
-    if (getenv('DUMP_SCHEMA') == 1) {
+    if (getenv('SCHEMA_DUMP') == 1) {
 
       $output->writeln("Cleaning Database with artisan's <bg=green;options=bold>db:fix && db:schema:dump</>...");
 

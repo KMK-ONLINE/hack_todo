@@ -32,6 +32,7 @@ class RootTest extends FunctionalTestCase {
 
   public function test_long_tasks_cant_be_created() {
     $this->visit('/');
+
     $form = $this->crawler->filter('form[method=post]')->form();
     $form->setValues([ 'name' => str_random(300) ]);
     $this->makeRequestUsingForm($form);

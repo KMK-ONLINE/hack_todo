@@ -8,23 +8,13 @@ use Illuminate\Support\Facades\Validator;
 class Task extends Model {
 
   public function scopeActive($query) {
-    return $query->where('completed', false);
+    return $query->where(function($q) {
+      return $q->where('completed', false)->orWhere('completed', null);
+    });
   }
 
-  // public $errors;
-  //
-  // private $rules = [
-  //   'name' => 'required|max:255'
-  // ];
-  //
-  // public function isValid() {
-  //   $data = $this->getAttributes();
-  //
-  //   $validator =  Validator::make($data, $this->rules);
-  //   $success      = $validator->passes();
-  //   $this->errors = $validator->errors(); 
-  //
-  //   return $success;
-  // }
+  public function scopeCompleted($query) {
+    return $query->where('completed', true);
+  }
 
 }

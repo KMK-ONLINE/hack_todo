@@ -13,7 +13,7 @@ class TaskControllerTest extends ControllerTestCase {
       factory(Task::class)->create(['name' => 'Task 2']);
 
       $path = URL::route('task.index');
-      $response = $this->get($path);
+      $this->get($path);
 
       $this->assertResponseStatus(200);
 
@@ -27,7 +27,7 @@ class TaskControllerTest extends ControllerTestCase {
       $inactiveTask = factory(Task::class)->create(['completed' => true]);
 
       $path = URL::route('task.index', ['filter' => 'active']);
-      $response = $this->get($path);
+      $this->get($path);
       $this->assertResponseStatus(200);
 
       $actualTaskIds = $this->response->original->:collection->fetch('id')->all();
@@ -36,7 +36,7 @@ class TaskControllerTest extends ControllerTestCase {
 
 
       $path = URL::route('task.index', ['filter' => 'completed']);
-      $response = $this->get($path);
+      $this->get($path);
       $this->assertResponseStatus(200);
 
       $actualTaskIds = $this->response->original->:collection->fetch('id')->all();
@@ -48,7 +48,7 @@ class TaskControllerTest extends ControllerTestCase {
       $name = 'Wash Dishes';
 
       $path = URL::route('task.store');
-      $response = $this->post($path, [ 'name' => $name, '_token' => csrf_token() ]);
+      $this->post($path, [ 'name' => $name, '_token' => csrf_token() ]);
 
       $this->assertResponseStatus(302);
 
@@ -56,21 +56,18 @@ class TaskControllerTest extends ControllerTestCase {
       $this->assertEquals($name, $task->name);
     }
 
-    public function test_update() {
-      $name = 'Wash Dishes';
+    public function test_update_name_and_completed() {
+      $task = factory(Task::class)->create(['completed' => false ]);
       $updatedName = 'Feed Cat';
 
-      $task = new Task();
-      $task->name = $name;
-      $task->save();
-
       $path = URL::route('task.update', ['id' => $task->id ]);
-      $response = $this->put($path, [ 'name' => $updatedName, '_token' => csrf_token() ]);
+      $this->put($path, [ 'name' => $updatedName, 'completed' => true, '_token' => csrf_token() ]);
 
       $this->assertResponseStatus(302);
 
       $updatedTask = Task::find($task->id);
       $this->assertEquals($updatedName, $updatedTask->name);
+      $this->assertTrue($updatedTask->completed);
     }
 
 }

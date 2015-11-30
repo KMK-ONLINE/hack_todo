@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 
 class Task extends Model {
 
+  public $fillable = ['name', 'completed'];
+
   public function scopeActive($query) {
     return $query->where(function($q) {
       return $q->where('completed', false)->orWhere('completed', null);

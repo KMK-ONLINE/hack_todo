@@ -21,8 +21,8 @@ abstract class Controller extends BaseController
    *
    * @return        array         Whitelist array
    */
-  protected function strongParams(Request $request, array $whiteList) {
-    return (new StrongParameter($request->all(), $whiteList))->run();
+  protected function strongParams(Request $request, array $whiteList, $fillMissingWithNull = null) {
+    return (new StrongParameter($request->all(), $whiteList, $fillMissingWithNull))->run();
   }
 
 }

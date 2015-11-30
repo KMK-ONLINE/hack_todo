@@ -14,7 +14,7 @@ class TaskController extends Controller {
   public function index(TaskRequest $request) {
     $tasks = Task::orderBy('created_at', 'asc');
 
-    $params = $this->strongParams($request, ['filter']);
+    $params = $this->strongParams($request, ['filter'], true);
 
     if ($params['filter'] == 'active') {
       $tasks = $tasks->active();
@@ -45,10 +45,12 @@ class TaskController extends Controller {
     return redirect('/');
   }
 
-  public function update(Request $request, $id) {
+  public function update(TaskRequest $request, $id) {
     $task = Task::findOrFail($id);
-    $task->name = $request->name;
+    $params = $this->strongParams($request, ['name', 'completed']);
+    $task->fill($params);
     $task->save();
+
     return redirect('/');
   }
 

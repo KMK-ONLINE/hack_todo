@@ -11,7 +11,7 @@ class FooterTest extends ComponentTestCase {
   public function test_has_filters() {
     $collection = new Collection();
 
-    $component = <task:footer collection={$collection} />;
+    $component = <task:footer />;
     $dom = $this->toCrawler($component);
 
     $this->assertEquals(1, count($dom->filter('a[href*="?filter=active"]')));
@@ -22,7 +22,7 @@ class FooterTest extends ComponentTestCase {
     Input::replace(['filter' => 'completed']);
 
     $collection = new Collection();
-    $component = <task:footer collection={$collection} />;
+    $component = <task:footer />;
 
     $dom = $this->toCrawler($component);
     $this->assertEquals(1, count($dom->filter('a.selected')));

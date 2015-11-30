@@ -73,10 +73,5 @@ class :layout:base extends :x:element {
       </x:doctype>;
   }
 
-  public function script() {
-    return <<<SCRIPT
-SCRIPT;
-  }
-
 }
 

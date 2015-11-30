@@ -4,9 +4,14 @@ namespace App\Lib;
 
 class StrongParameter {
 
-  public function __construct(private array $initialParams, private array $whiteList) {
+  private array $initialParams;
+  private array $whiteList;
+  private boolean $fillMissingWithNull;
+
+  public function __construct($initialParams, $whiteList, $fillMissingWithNull = false) {
     $this->initialParams = $initialParams;
     $this->whiteList = $whiteList;
+    $this->fillMissingWithNull = $fillMissingWithNull;
   }
 
   public function run() {
@@ -15,7 +20,7 @@ class StrongParameter {
     foreach($this->whiteList as $key) {
       if(array_key_exists($key, $this->initialParams)) {
         $filtered[$key] = $this->initialParams[$key];
-      } else {
+      } else if ($this->fillMissingWithNull) {
         $filtered[$key] = null;
       }
     }
@@ -24,5 +29,6 @@ class StrongParameter {
   }
 
 }
+
 
 

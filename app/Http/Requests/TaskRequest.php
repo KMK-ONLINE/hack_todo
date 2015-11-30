@@ -48,7 +48,8 @@ class TaskRequest extends Request
       case 'PATCH':
       {
         return [
-          'phone'                   => ['regex:/^\+?[0-9]+$/']
+          'name'                   => ['string'],
+          'completed'                   => ['boolean']
         ];
       }
       default:break;

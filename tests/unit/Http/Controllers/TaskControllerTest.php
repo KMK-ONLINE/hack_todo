@@ -56,6 +56,16 @@ class TaskControllerTest extends ControllerTestCase {
       $this->assertEquals($name, $task->name);
     }
 
+    public function test_store_with_invalid_data() {
+      $name = str_random(300);
+
+      $path = URL::route('task.store');
+      $this->post($path, [ 'name' => $name, '_token' => csrf_token() ]);
+
+      $this->assertResponseStatus(302);
+      $this->assertEquals(0, Task::count());
+    }
+
     public function test_update_name_and_completed() {
       $task = factory(Task::class)->create(['completed' => false ]);
       $updatedName = 'Feed Cat';

@@ -35,7 +35,7 @@ class TaskRequest extends Request {
       }
       case 'POST': {
         return [
-          'name'            => ['string', 'required']
+          'name'            => ['string', 'max:255', 'required']
         ];
       }
       case 'PUT':
